@@ -20,7 +20,7 @@ namespace RideUniAPI.Services
         {
             var lista = new List<Reporte>();
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_listar_reportes", conn);
+            using var cmd = new SqlCommand("sp_ListarReportes", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             await conn.OpenAsync();
@@ -34,7 +34,7 @@ namespace RideUniAPI.Services
         public async Task<Reporte?> BuscarAsync(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_buscar_reporte", conn);
+            using var cmd = new SqlCommand("sp_BuscarReporte", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", id);
 
@@ -49,8 +49,9 @@ namespace RideUniAPI.Services
         public async Task InsertarAsync(Reporte rep)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_insertar_reporte", conn);
+            using var cmd = new SqlCommand("sp_InsertarReporte", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", rep.Id);
             cmd.Parameters.AddWithValue("@fecha", rep.Fecha);
             cmd.Parameters.AddWithValue("@descripcion", rep.Descripcion);
             cmd.Parameters.AddWithValue("@id_camion", rep.IdCamion);
@@ -62,7 +63,7 @@ namespace RideUniAPI.Services
         public async Task ActualizarAsync(Reporte rep)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_actualizar_reporte", conn);
+            using var cmd = new SqlCommand("sp_ActualizarReporte", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", rep.Id);
             cmd.Parameters.AddWithValue("@fecha", rep.Fecha);
@@ -76,7 +77,7 @@ namespace RideUniAPI.Services
         public async Task EliminarAsync(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_eliminar_reporte", conn);
+            using var cmd = new SqlCommand("sp_EliminarReporte", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", id);
 

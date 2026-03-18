@@ -17,7 +17,7 @@ namespace RideUniAPI.Services
         {
             var lista = new List<Ruta>();
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_listar_rutas", conn);
+            using var cmd = new SqlCommand("sp_ListarRutas", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             await conn.OpenAsync();
@@ -31,7 +31,7 @@ namespace RideUniAPI.Services
         public async Task<Ruta?> BuscarAsync(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_buscar_ruta", conn);
+            using var cmd = new SqlCommand("sp_BuscarRuta", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", id);
 
@@ -46,8 +46,9 @@ namespace RideUniAPI.Services
         public async Task InsertarAsync(Ruta r)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_insertar_ruta", conn);
+            using var cmd = new SqlCommand("sp_InsertarRuta", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", r.Id);
             cmd.Parameters.AddWithValue("@origen", r.Origen);
             cmd.Parameters.AddWithValue("@destino", r.Destino);
             cmd.Parameters.AddWithValue("@distancia", r.Distancia);
@@ -59,7 +60,7 @@ namespace RideUniAPI.Services
         public async Task ActualizarAsync(Ruta r)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_actualizar_ruta", conn);
+            using var cmd = new SqlCommand("sp_ActualizarRuta", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", r.Id);
             cmd.Parameters.AddWithValue("@origen", r.Origen);
@@ -73,7 +74,7 @@ namespace RideUniAPI.Services
         public async Task EliminarAsync(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_eliminar_ruta", conn);
+            using var cmd = new SqlCommand("sp_EliminarRuta", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", id);
 

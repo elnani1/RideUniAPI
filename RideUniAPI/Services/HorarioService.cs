@@ -17,7 +17,7 @@ namespace RideUniAPI.Services
         {
             var lista = new List<Horario>();
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_listar_horarios", conn);
+            using var cmd = new SqlCommand("sp_ListarHorarios", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             await conn.OpenAsync();
@@ -31,7 +31,7 @@ namespace RideUniAPI.Services
         public async Task<Horario?> BuscarAsync(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_buscar_horario", conn);
+            using var cmd = new SqlCommand("sp_BuscarHorario", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", id);
 
@@ -46,8 +46,9 @@ namespace RideUniAPI.Services
         public async Task InsertarAsync(Horario h)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_insertar_horario", conn);
+            using var cmd = new SqlCommand("sp_InsertarHorario", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", h.Id);
             cmd.Parameters.AddWithValue("@horaSalida", h.HoraSalida);
             cmd.Parameters.AddWithValue("@horaLlegada", h.HoraLlegada);
             cmd.Parameters.AddWithValue("@id_camion", h.IdCamion);
@@ -59,7 +60,7 @@ namespace RideUniAPI.Services
         public async Task ActualizarAsync(Horario h)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_actualizar_horario", conn);
+            using var cmd = new SqlCommand("sp_ActualizarHorario", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", h.Id);
             cmd.Parameters.AddWithValue("@horaSalida", h.HoraSalida);
@@ -73,7 +74,7 @@ namespace RideUniAPI.Services
         public async Task EliminarAsync(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_eliminar_horario", conn);
+            using var cmd = new SqlCommand("sp_EliminarHorario", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", id);
 

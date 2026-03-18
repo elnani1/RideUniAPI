@@ -17,7 +17,7 @@ namespace RideUniAPI.Services
         {
             var lista = new List<Conductor>();
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_listar_conductores", conn);
+            using var cmd = new SqlCommand("sp_ListarConductores", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             await conn.OpenAsync();
@@ -31,7 +31,7 @@ namespace RideUniAPI.Services
         public async Task<Conductor?> BuscarAsync(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_buscar_conductor", conn);
+            using var cmd = new SqlCommand("sp_BuscarConductor", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", id);
 
@@ -48,9 +48,10 @@ namespace RideUniAPI.Services
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_InsertarConductor", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@nombre", c.Nombre);
+            cmd.Parameters.AddWithValue("id", c.Id);
+            cmd.Parameters.AddWithValue("@Nombre", c.Nombre);
             cmd.Parameters.AddWithValue("@numeroCelular", c.NumeroCelular);
-            cmd.Parameters.AddWithValue("@direccion", c.Direccion);
+            cmd.Parameters.AddWithValue("@Direccion", c.Direccion);
 
             await conn.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
@@ -59,7 +60,7 @@ namespace RideUniAPI.Services
         public async Task ActualizarAsync(Conductor c)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_actualizar_conductor", conn);
+            using var cmd = new SqlCommand("sp_ActualizarConductor", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", c.Id);
             cmd.Parameters.AddWithValue("@nombre", c.Nombre);
@@ -73,7 +74,7 @@ namespace RideUniAPI.Services
         public async Task EliminarAsync(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_eliminar_conductor", conn);
+            using var cmd = new SqlCommand("sp_EliminarConductor", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", id);
 
