@@ -46,12 +46,16 @@ namespace RideUniAPI.Services
             return null;
         }
 
+        // 🔥 FIX AQUÍ
         public async Task InsertarAsync(Reporte rep)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_InsertarReporte", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@id", rep.Id);
+
+            // ❌ NO mandar ID
+            // cmd.Parameters.AddWithValue("@id", rep.Id);
+
             cmd.Parameters.AddWithValue("@fecha", rep.Fecha);
             cmd.Parameters.AddWithValue("@descripcion", rep.Descripcion);
             cmd.Parameters.AddWithValue("@id_camion", rep.IdCamion);

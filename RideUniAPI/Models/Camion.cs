@@ -17,8 +17,6 @@ namespace RideUniAPI.Models
         public bool Disponibilidad { get; set; }
 
         [Required(ErrorMessage = "Debe asignar un conductor")]
-        public int IdConductor { get; set; }
-
-        public Conductor? Conductor { get; set; }
+        public int IdConductor { get; set; }        
     }
 }
